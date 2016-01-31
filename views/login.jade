@@ -1,0 +1,13 @@
+doctype html
+html(lang='es')
+  head
+    meta(charset='UTF-8')
+    | &#x9;
+    title Login
+  body
+    form(action='/menu', method='post')
+      input(type='text', name='usuario', placeholder='usuario', required='')
+      | &#x9;&#x9;
+      input(type='pasword', name='password', placeholder='password', required='')
+      | &#x9;&#x9;
+      input(type='submit', value='enviar')
