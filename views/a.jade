@@ -15,15 +15,21 @@ html
       .n { display:inline-block;}
       .m { display:inline-block; float: right;}
       .r { width: 100%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      }
   |   
   body
     h1(class='n')=u
+    select#usuarios
+      option(value='todos') Todos
+      
+
     form(action='/logout',class='m', method='post')
       button(class='r') Salir
+    
     | 
     ul#messages
     |     
-    form#s(action='', onsubmit='men(); return false;')
+    form#s(action='', onsubmit='mensaje(); return false;')
       input#m(autocomplete='off')
       button Send
     |     
@@ -40,13 +46,24 @@ html
       socket.on('connect',function(){
       window.user={
       ide:socket.id,
-      user:'#{u}'
+      user:'#{u}',
+      no:true
+      
       }
       socket.emit('acceso', user);
+
+      });
+      socket.on('agrega',function(user){
+      $('#usuarios').append($('<option>').text(user));
       });
       //$('form').submit(function(){
-      function men(){
-      socket.emit('chat message', $('#m').val());
+      function mensaje(){
+      window.mens={
+      msj:$('#m').val(),
+      des:$('#usuarios').val(),
+      ide:socket.id
+      }
+      socket.emit('chat message', mens);
       $('#m').val('');
       //alert("man");
       }
