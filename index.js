@@ -47,6 +47,12 @@ app.get('/menu',function(req,res){
 app.get('/as',function(req,res){
   console.log(app_user2);
   });
+app.get('/ass',function(req,res){
+  console.log(app_user);
+  });
+
+
+
 /*app.get('/ass',function(req,res){
   console.log('-------------------');
   console.log(app_user);
@@ -94,7 +100,7 @@ var app_user={};
 io.on('connection', function(socket){
 	console.log('a user connected');
   
-	io.emit('chat message',''+socket.id);
+	//io.emit('chat message',''+socket.id);
     	//console.log(socket.id);
 	var exten='/#';
   	socket.on('disconnect', function(){
@@ -111,8 +117,8 @@ io.on('connection', function(socket){
       for(var socketid in app_user){
         if(app_user[socketid].user==msg.des){
           io.to('/#'+app_user[socketid].ide).emit('chat message',msg.msj);
-          if(app_user[socketid].ide!=msg.ide){
-          io.to('/#'+msg.ide).emit('chat message',msg.msj);}
+          //if(app_user[socketid].ide!=msg.ide){
+          io.to('/#'+msg.ide).emit('chat message',msg.msj);//}
         }
       }
       }
@@ -130,10 +136,15 @@ io.on('connection', function(socket){
       io.to(socket.id).emit('agrega', app_user2[socketid1].user);
       }
       }
+      var ex=false;
+      for(var socketid in app_user2){
+        if(app_user2[socketid].user===user.user){ex=true;}
+      }
+    if(!ex){io.emit('agrega', user.user);}
+
+
       if (app_user2.ok===undefined) {
         app_user2.ok='ok';
-      
-
       app_user2[user.ide]=app_user[user.ide];
       }else{
         var i=false;
@@ -149,9 +160,7 @@ io.on('connection', function(socket){
       //  user.no=false;
       
      // }else{
-      for(var socketid in app_user2){
-        if(app_user2[socketid].user!==user.user){io.emit('agrega', user.user);}
-      }
+      
       //}
       session.ide=user.ide;
     });
