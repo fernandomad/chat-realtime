@@ -117,8 +117,8 @@ io.on('connection', function(socket){
       for(var socketid in app_user){
         if(app_user[socketid].user==msg.des){
           io.to('/#'+app_user[socketid].ide).emit('chat message',msg.msj);
-          //if(app_user[socketid].ide!=msg.ide){
-          io.to('/#'+msg.ide).emit('chat message',msg.msj);//}
+          if(app_user[socketid].ide!=msg.ide){
+          io.to('/#'+msg.ide).emit('chat message',msg.msj);}
         }
       }
       }
@@ -170,7 +170,7 @@ io.on('connection', function(socket){
   
 });
 
-
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+var port=process.env.OPENSHIFT_NODEJS_PORT || 3000;
+http.listen(port, function(){
+  console.log('listening on *'+port);
 });
