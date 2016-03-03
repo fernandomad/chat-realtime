@@ -5,8 +5,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
 var bodyParser     =  require('body-parser');
-var session = require('express-session')
-var cookieSession = require('cookie-session')
+var session = require('express-session');
+var cookieSession = require('cookie-session');
 
 app.use(cookieSession({
   name: 'session',
@@ -25,6 +25,11 @@ app.get('/', function(req, res){
     {res.render('login');}
   
 }); 
+app.get('/ruta', function(req, res){
+ 
+    res.render('index');
+  
+});
 app.post('/logout',function(req,res){
 req.session=null;
 res.redirect('/');
